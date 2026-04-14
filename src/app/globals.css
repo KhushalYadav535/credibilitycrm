@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+:root {
+  --background: #060b16;
+  --foreground: #f6f8ff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-poppins), Arial, sans-serif;
+}
+
+.section-wrap {
+  @apply mx-auto w-full max-w-7xl px-6 py-20 md:py-24;
+}
+
+.glass-card {
+  @apply rounded-3xl border border-white/15 bg-white/5 backdrop-blur-xl;
+}
+
+.card-3d {
+  transform-style: preserve-3d;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: transform 300ms ease, box-shadow 300ms ease;
+}
+
+.card-3d:hover {
+  transform: translateY(-6px) rotateX(2deg);
+  box-shadow: 0 26px 64px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.btn-primary {
+  @apply rounded-full bg-[#FF6A00] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#ff7f2d];
+}
+
+.btn-secondary {
+  @apply rounded-full border border-white/30 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10;
+}
+
+.field {
+  @apply w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-slate-400 focus:border-orange-400;
+}
+
+input[type="range"] {
+  height: 8px;
+  border-radius: 999px;
+}
+
+.luxury-hero {
+  background: radial-gradient(circle at 20% 0%, rgba(255, 106, 0, 0.22), transparent 35%),
+    radial-gradient(circle at 80% 10%, rgba(99, 102, 241, 0.3), transparent 35%), #060b16;
+  animation: heroShift 6s ease-in-out infinite;
+}
+
+.sticky-cta {
+  @apply fixed bottom-6 right-6 z-40 rounded-full bg-[#FF6A00] px-6 py-3 text-sm font-semibold text-white shadow-[0_0_24px_rgba(255,106,0,0.5)] transition hover:scale-105;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+.marquee-content {
+  display: flex;
+  gap: 0.9rem;
+  padding-right: 0.9rem;
+}
+
+.h-showcase {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.35rem;
+}
+
+.h-showcase > * {
+  scroll-snap-align: start;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes heroShift {
+  0% {
+    background-position: 0 0, 0 0, 0 0;
+  }
+  50% {
+    background-position: 34px -24px, -36px 24px, 0 0;
+  }
+  100% {
+    background-position: 0 0, 0 0, 0 0;
+  }
+}
+
+.bg-grid-pattern {
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+}
+
+@keyframes gridScroll {
+  from {
+    transform: translateY(0) rotateX(75deg);
+  }
+  to {
+    transform: translateY(50px) rotateX(75deg);
+  }
+}
+
+.animate-grid-scroll {
+  animation: gridScroll 2s linear infinite;
+}
+
+.scanner-text {
+  background-image: linear-gradient(
+    90deg,
+    #fff 0%,
+    #4a5568 40%,
+    #FF6A00 50%,
+    #6366F1 60%,
+    #fff 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}

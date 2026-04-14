@@ -1,0 +1,21 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="navy" x1="0" y1="0" x2="128" y2="128">
+      <stop offset="0" stop-color="#1E3A6E"/>
+      <stop offset="1" stop-color="#0B1F3A"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0" y1="0" x2="128" y2="128">
+      <stop offset="0" stop-color="#7ED1C7"/>
+      <stop offset="1" stop-color="#4EAFA2"/>
+    </linearGradient>
+  </defs>
+
+  <path d="M95 22C84 11 70 6 55 6C24 6 0 31 0 63C0 94 24 120 55 120C70 120 84 114 95 104L86 92C77 100 66 104 55 104C33 104 16 86 16 63C16 40 33 22 55 22C66 22 77 26 86 34L95 22Z" fill="url(#navy)"/>
+  <path d="M85 35C77 28 67 24 56 24C35 24 19 41 19 63C19 84 35 102 56 102C67 102 77 98 85 91L77 80C71 86 64 89 56 89C43 89 32 77 32 63C32 48 43 37 56 37C64 37 71 40 77 46L85 35Z" fill="#F4F8FF"/>
+  <path d="M74 46C69 42 63 40 57 40C44 40 34 50 34 63C34 75 44 86 57 86C63 86 69 84 74 80L67 71C64 74 61 75 57 75C50 75 45 70 45 63C45 55 50 50 57 50C61 50 64 52 67 55L74 46Z" fill="#E8EEF8"/>
+  <circle cx="94" cy="35" r="8" fill="#2E5E97"/>
+  <circle cx="94" cy="93" r="8" fill="#2E5E97"/>
+  <circle cx="94" cy="93" r="4" fill="url(#teal)"/>
+  <path d="M71 88L84 80L89 86L76 95L71 88Z" fill="url(#teal)"/>
+  <path d="M73 39L85 49L80 56L67 46L73 39Z" fill="#2E5E97"/>
+</svg>
