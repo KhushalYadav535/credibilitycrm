@@ -57,6 +57,18 @@ const footerSections = [
   },
 ];
 
+const socialLinks = [
+  { href: "https://www.linkedin.com", label: "LinkedIn" },
+  { href: "https://www.youtube.com", label: "YouTube" },
+  { href: "https://x.com", label: "X" },
+];
+
+const quickActions = [
+  { href: "mailto:sales@credibility.ai", label: "Email Sales" },
+  { href: "tel:+919999999999", label: "Call Team" },
+  { href: "https://wa.me/919999999999", label: "WhatsApp" },
+];
+
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
@@ -158,6 +170,19 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               <p className="mt-3 text-sm text-slate-400">
                 AI Voice-driven Customer Interaction Layer for BFSI leaders.
               </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {socialLinks.map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-slate-300 transition hover:border-white/40 hover:text-white"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
             </div>
             {footerSections.map((section) => (
               <div key={section.title}>
@@ -175,7 +200,13 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <div className="border-t border-white/10">
             <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5 text-xs text-slate-500">
               <p>© {new Date().getFullYear()} Santiently Innovations</p>
-              <p>Built for premium customer engagement</p>
+              <div className="flex flex-wrap justify-end gap-4">
+                {quickActions.map((item) => (
+                  <a key={item.label} href={item.href} className="text-slate-400 transition hover:text-white">
+                    {item.label}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </footer>

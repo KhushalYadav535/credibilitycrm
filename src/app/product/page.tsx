@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import TestimonialsSection from "@/components/testimonials-section";
+import AutoHorizontalScroll from "@/components/auto-horizontal-scroll";
 
 const modules = [
   {
@@ -193,7 +194,7 @@ export default function ProductPage() {
 
       <section className="section-wrap">
         <div className="grid gap-8 lg:grid-cols-2">
-          <aside className="card-3d glass-card h-fit p-7 lg:sticky lg:top-28">
+          <aside className="card-3d glass-card h-fit self-start p-7 lg:sticky lg:top-28">
             <p className="text-sm text-orange-300">Sticky Product Story</p>
             <h2 className="mt-3 text-3xl font-semibold md:text-4xl">
               One interaction layer. Multiple mission-critical customer journeys.
@@ -232,7 +233,7 @@ export default function ProductPage() {
             </div>
             <p className="hidden text-sm text-slate-400 md:block">Drag or shift+wheel</p>
           </div>
-          <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2">
+          <AutoHorizontalScroll className="mt-0">
             {showcase.map((item) => (
               <article
                 key={item.heading}
@@ -245,7 +246,7 @@ export default function ProductPage() {
                 <p className="mt-3 max-w-xl text-slate-300">{item.copy}</p>
               </article>
             ))}
-          </div>
+          </AutoHorizontalScroll>
         </div>
       </section>
 
