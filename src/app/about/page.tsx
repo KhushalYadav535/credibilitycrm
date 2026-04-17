@@ -3,11 +3,12 @@
 import { motion } from "framer-motion";
 import AutoHorizontalScroll from "@/components/auto-horizontal-scroll";
 import TestimonialsSection from "@/components/testimonials-section";
+import SceneSection from "@/components/scene-section";
 
 export default function AboutPage() {
   return (
     <div>
-      <section className="section-wrap pt-14">
+      <SceneSection className="section-wrap pt-14">
         <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950 p-8 md:p-12">
           <div className="pointer-events-none absolute -left-20 top-0 h-72 w-72 rounded-full bg-orange-500/20 blur-3xl" />
           <motion.h1 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="text-4xl font-bold md:text-6xl">
@@ -18,7 +19,7 @@ export default function AboutPage() {
             with measurable operational outcomes and premium customer experiences.
           </p>
         </div>
-      </section>
+      </SceneSection>
 
       <section className="section-wrap pt-8">
         <div className="mt-2 grid gap-5 md:grid-cols-3">

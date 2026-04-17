@@ -3,6 +3,10 @@
 :root {
   --background: #060b16;
   --foreground: #f6f8ff;
+  --motion-fast: 220ms;
+  --motion-medium: 420ms;
+  --motion-slow: 760ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @theme inline {
@@ -36,7 +40,7 @@ h4 {
 .card-3d {
   transform-style: preserve-3d;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  transition: transform 300ms ease, box-shadow 300ms ease;
+  transition: transform var(--motion-medium) var(--motion-ease), box-shadow var(--motion-medium) var(--motion-ease);
 }
 
 .card-3d:hover {
@@ -45,11 +49,11 @@ h4 {
 }
 
 .btn-primary {
-  @apply rounded-full bg-[#FF6A00] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#ff7f2d];
+  @apply rounded-full bg-[#FF6A00] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#ff7f2d] hover:shadow-[0_0_22px_rgba(255,106,0,0.55)];
 }
 
 .btn-secondary {
-  @apply rounded-full border border-white/30 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10;
+  @apply rounded-full border border-white/30 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10 hover:shadow-[0_0_16px_rgba(129,140,248,0.35)];
 }
 
 .field {
@@ -68,7 +72,7 @@ input[type="range"] {
 }
 
 .sticky-cta {
-  @apply fixed bottom-6 right-6 z-40 rounded-full bg-[#FF6A00] px-6 py-3 text-sm font-semibold text-white shadow-[0_0_24px_rgba(255,106,0,0.5)] transition hover:scale-105;
+  @apply fixed bottom-24 right-6 z-40 rounded-full bg-[#FF6A00] px-6 py-3 text-sm font-semibold text-white shadow-[0_0_24px_rgba(255,106,0,0.5)] transition hover:scale-105;
 }
 
 .marquee-track {
@@ -87,12 +91,23 @@ input[type="range"] {
   display: flex;
   gap: 1rem;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
   padding-bottom: 0.35rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  touch-action: pan-y;
+  will-change: scroll-position;
 }
 
 .h-showcase > * {
-  scroll-snap-align: start;
+  /* No snap to prevent conflict with auto-scroll script */
+}
+
+.h-showcase::-webkit-scrollbar {
+  display: none;
+}
+
+.scene-wipe {
+  background: radial-gradient(circle at center, rgba(255, 106, 0, 0.06), transparent 55%);
 }
 
 @keyframes marquee {

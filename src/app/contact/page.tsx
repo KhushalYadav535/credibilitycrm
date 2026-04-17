@@ -58,10 +58,12 @@ export default function ContactPage() {
         <input className="field md:col-span-2" name="email" placeholder="Email" type="email" required />
         <input className="field" name="phone" placeholder="Phone" />
         <select className="field" name="industry">
-          <option>Banking</option>
-          <option>NBFC</option>
-          <option>Insurance</option>
-          <option>Fintech</option>
+          <option>Banking & Finance</option>
+          <option>Healthcare</option>
+          <option>Telecommunications</option>
+          <option>Retail & E-commerce</option>
+          <option>Utilities</option>
+          <option>Other Enterprise</option>
         </select>
         <textarea className="field md:col-span-2" name="message" rows={5} placeholder="Message" />
         <button className="btn-primary md:col-span-2 disabled:opacity-70" disabled={isSubmitting} type="submit">

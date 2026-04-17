@@ -7,10 +7,10 @@ import { trackEvent } from "@/lib/analytics";
 import { TiltCard } from "@/components/tilt-card";
 import { CinematicGrid } from "@/components/cinematic-grid";
 import { CinematicButton } from "@/components/cinematic-button";
-import { FloatingWidgets } from "@/components/floating-widgets";
 import { AiVisualizer } from "@/components/ai-visualizer";
 import { FlipCard } from "@/components/flip-card";
 import { AnimatedCounter } from "@/components/animated-counter";
+import SceneSection from "@/components/scene-section";
 
 const stats = [
   { label: "Resolution Speed", value: "3.1x" },
@@ -30,9 +30,8 @@ export default function Home() {
 
   return (
     <div>
-      <section className="luxury-hero relative">
+      <SceneSection className="luxury-hero relative">
         <CinematicGrid />
-        <FloatingWidgets />
         <div className="section-wrap relative z-10 overflow-hidden text-center min-h-[90vh] flex flex-col justify-center">
           <motion.div
             animate={{ y: [0, -24, 0], x: [0, 16, 0], scale: [1, 1.2, 1], rotate: [0, 8, 0] }}
@@ -137,9 +136,9 @@ export default function Home() {
             ))}
           </motion.div>
         </div>
-      </section>
+      </SceneSection>
 
-      <section className="section-wrap">
+      <SceneSection className="section-wrap">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -169,9 +168,9 @@ export default function Home() {
             backDesc="Always polite, empathetic, and compliant on every call."
           />
         </motion.div>
-      </section>
+      </SceneSection>
 
-      <section className="section-wrap">
+      <SceneSection className="section-wrap">
         <div className="grid auto-rows-[180px] gap-5 md:grid-cols-3">
           <TiltCard className="p-6 md:col-span-2 md:row-span-2 flex flex-col justify-center relative overflow-hidden">
             <motion.div 
@@ -229,13 +228,14 @@ export default function Home() {
           </TiltCard>
           <TiltCard className="p-6 md:col-span-2">
             <p className="text-sm text-slate-300">ROI Preview</p>
+            <p className="mt-1 text-xs text-slate-400">Illustrative estimate based on 50 agents and 10,000 calls/month.</p>
             <div className="mt-4 grid gap-4 sm:grid-cols-2 text-left">
               <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-black/40 to-black/10 p-5 relative z-10 overflow-hidden group">
                 <div className="absolute inset-0 bg-orange-500/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
                 <p className="text-xs text-slate-400 uppercase tracking-wide">Avg monthly savings</p>
                 <div className="mt-2 flex items-baseline gap-1 text-3xl font-bold text-white">
                   <span>₹</span>
-                  <AnimatedCounter to={18.4} decimals={1} />
+                  <AnimatedCounter from={18.4} to={18.4} decimals={1} />
                   <span>L</span>
                 </div>
                 <div className="mt-4 h-1.5 w-full rounded-full bg-slate-800">
@@ -250,7 +250,7 @@ export default function Home() {
                 <p className="text-xs text-slate-400 uppercase tracking-wide">Agent load reduction</p>
                 <div className="mt-2 flex items-baseline gap-1 text-3xl font-bold text-white">
                   <span>-</span>
-                  <AnimatedCounter to={43} />
+                  <AnimatedCounter from={43} to={43} />
                   <span className="text-xl ml-1 text-slate-400 font-medium">FTE</span>
                 </div>
                 <div className="mt-4 h-1.5 w-full rounded-full bg-slate-800">
@@ -263,11 +263,11 @@ export default function Home() {
             </div>
           </TiltCard>
         </div>
-      </section>
+      </SceneSection>
 
       <section className="section-wrap pt-4">
         <div className="glass-card overflow-hidden p-6">
-          <p className="text-center text-sm text-slate-300">Trusted by forward-thinking BFSI operations teams</p>
+          <p className="text-center text-sm text-slate-300">Trusted by forward-thinking operations teams</p>
           <div className="mt-5 marquee-track">
             <div className="marquee-content">
               {["Tier-1 Bank", "Digital NBFC", "InsurTech", "Retail Bank", "Fintech Lender", "Co-op Bank"].map((x) => (
@@ -287,6 +287,15 @@ export default function Home() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="section-wrap pt-8 pb-4">
+        <div className="text-center">
+          <p className="text-sm text-orange-300 uppercase tracking-wider font-semibold">Pricing</p>
+          <p className="mt-2 text-slate-300 max-w-2xl mx-auto">
+            Custom pricing based on call volume and deployment scope. We offer flexible Starter, Growth, and Enterprise tiers without buyer friction.
+          </p>
         </div>
       </section>
 

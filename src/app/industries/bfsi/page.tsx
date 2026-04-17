@@ -3,11 +3,12 @@
 import { motion } from "framer-motion";
 import AutoHorizontalScroll from "@/components/auto-horizontal-scroll";
 import TestimonialsSection from "@/components/testimonials-section";
+import SceneSection from "@/components/scene-section";
 
 export default function BFSIPage() {
   return (
     <div>
-      <section className="section-wrap pt-14">
+      <SceneSection className="section-wrap pt-14">
         <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950 p-8 md:p-12">
           <div className="pointer-events-none absolute -left-24 top-0 h-72 w-72 rounded-full bg-orange-500/20 blur-3xl" />
           <div className="pointer-events-none absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl" />
@@ -18,7 +19,7 @@ export default function BFSIPage() {
             Built for institutions where customer trust, compliance, and response speed must co-exist without compromise.
           </p>
         </div>
-      </section>
+      </SceneSection>
 
       <section className="section-wrap pt-8">
         <div className="grid auto-rows-[180px] gap-5 md:grid-cols-3">

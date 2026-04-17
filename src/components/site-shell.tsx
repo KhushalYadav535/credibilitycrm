@@ -4,12 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { createContext, useContext, useMemo, useState } from "react";
-import { MotionConfig, motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { AnimatePresence, MotionConfig, motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { trackEvent } from "@/lib/analytics";
 import { CustomCursor } from "./custom-cursor";
 import { AnimatedBackground } from "./animated-background";
 import { SmoothScroll } from "./smooth-scroll";
 import { NoiseOverlay } from "./noise-overlay";
+import { motionTokens, pageTransition } from "@/lib/motion-system";
 
 type DemoContextType = { openDemo: () => void };
 const DemoContext = createContext<DemoContextType>({ openDemo: () => undefined });
@@ -18,12 +19,21 @@ export function useDemoModal() {
   return useContext(DemoContext);
 }
 
-const navItems = [
+const navData = [
   { href: "/product", label: "Product" },
   { href: "/use-cases", label: "Use Cases" },
-  { href: "/industries/bfsi", label: "BFSI" },
-  { href: "/roi-calculator", label: "ROI Calculator" },
-  { href: "/resources", label: "Resources" },
+  {
+    label: "Industries",
+    options: [{ href: "/industries/bfsi", label: "BFSI" }],
+  },
+  {
+    label: "Resources",
+    options: [
+      { href: "/roi-calculator", label: "ROI Calculator" },
+      { href: "/resources/blogs", label: "Blogs" },
+      { href: "/resources/case-studies", label: "Case Studies" },
+    ],
+  },
   { href: "/about", label: "About" },
 ];
 
@@ -34,7 +44,14 @@ const footerSections = [
       { href: "/product", label: "Product" },
       { href: "/use-cases", label: "Use Cases" },
       { href: "/industries/bfsi", label: "BFSI" },
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
       { href: "/roi-calculator", label: "ROI Calculator" },
+      { href: "/resources/blogs", label: "Blogs" },
+      { href: "/resources/case-studies", label: "Case Studies" },
     ],
   },
   {
@@ -42,17 +59,8 @@ const footerSections = [
     links: [
       { href: "/about", label: "About" },
       { href: "/contact", label: "Contact" },
-      { href: "/resources", label: "Resources" },
-      { href: "/resources/case-studies", label: "Case Studies" },
-    ],
-  },
-  {
-    title: "Resources",
-    links: [
-      { href: "/resources/blogs", label: "Blogs" },
       { href: "/privacy", label: "Privacy Policy" },
       { href: "/terms", label: "Terms of Service" },
-      { href: "/", label: "Home" },
     ],
   },
 ];
@@ -65,8 +73,8 @@ const socialLinks = [
 
 const quickActions = [
   { href: "mailto:sales@credibility.ai", label: "Email Sales" },
-  { href: "tel:+919999999999", label: "Call Team" },
-  { href: "https://wa.me/919999999999", label: "WhatsApp" },
+  { href: "tel:+919669023164", label: "Call Team" },
+  { href: "https://wa.me/919669023164", label: "WhatsApp" },
 ];
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
@@ -137,16 +145,43 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             <Image src="/credibility-logo.svg" alt="Credibility logo" width={28} height={28} priority />
             <span>Credibility</span>
           </Link>
-          <nav className="hidden gap-6 text-sm text-slate-300 lg:flex">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={pathname === item.href ? "text-orange-400" : "hover:text-white"}
-              >
-                {item.label}
-              </Link>
-            ))}
+          <nav className="hidden gap-6 text-sm text-slate-300 lg:flex items-center">
+            {navData.map((item) => {
+              if (item.options) {
+                return (
+                  <div key={item.label} className="group relative py-2">
+                    <button className="flex items-center gap-1 hover:text-white">
+                      {item.label}
+                      <svg className="w-3 h-3 opacity-60 transition duration-300 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    <div className="absolute left-0 top-full hidden w-48 pt-2 group-hover:block">
+                      <div className="rounded-xl border border-white/10 bg-slate-900/90 p-2 shadow-xl backdrop-blur-xl">
+                        {item.options.map((opt) => (
+                          <Link
+                            key={opt.href}
+                            href={opt.href}
+                            className={`block rounded-lg px-3 py-2 transition-colors ${pathname === opt.href ? "bg-white/10 text-orange-400" : "text-slate-300 hover:bg-white/5 hover:text-white"}`}
+                          >
+                            {opt.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <Link
+                  key={item.href!}
+                  href={item.href!}
+                  className={pathname === item.href ? "text-orange-400" : "hover:text-white"}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
           </nav>
           <button
             onClick={() => {
@@ -159,7 +194,18 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </button>
         </div>
         </motion.header>
-        <main className="flex-1">{children}</main>
+        <AnimatePresence mode="wait">
+          <motion.main
+            key={pathname}
+            initial={pageTransition.initial}
+            animate={pageTransition.animate}
+            exit={pageTransition.exit}
+            transition={{ duration: motionTokens.medium, ease: motionTokens.easing }}
+            className="flex-1"
+          >
+            {children}
+          </motion.main>
+        </AnimatePresence>
         <footer className="border-t border-white/10 bg-slate-950">
           <div className="mx-auto grid w-full max-w-7xl gap-8 px-6 py-12 md:grid-cols-4">
             <div>
@@ -168,7 +214,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 <span>Credibility</span>
               </Link>
               <p className="mt-3 text-sm text-slate-400">
-                AI Voice-driven Customer Interaction Layer for BFSI leaders.
+                AI Voice-driven Customer Interaction Layer for customer-centric enterprises.
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {socialLinks.map((item) => (
@@ -210,7 +256,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             </div>
           </div>
         </footer>
-        <Link href="/contact" className="sticky-cta">
+        <Link href="/contact" className="sticky-cta !bottom-24 md:!bottom-28">
           Contact Sales
         </Link>
         {isOpen && (
@@ -233,9 +279,12 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 <input required name="email" type="email" placeholder="Email" className="field md:col-span-2" />
                 <input name="phone" placeholder="Phone" className="field" />
                 <select name="industry" className="field">
-                  <option>BFSI</option>
-                  <option>Fintech</option>
-                  <option>NBFC</option>
+                  <option>Banking & Finance</option>
+                  <option>Healthcare</option>
+                  <option>Telecommunications</option>
+                  <option>Retail & E-commerce</option>
+                  <option>Utilities</option>
+                  <option>Other Enterprise</option>
                 </select>
                 <textarea name="message" placeholder="Message" className="field md:col-span-2" rows={4} />
                 <button type="submit" disabled={isSubmitting} className="btn-primary md:col-span-2 disabled:opacity-70">
