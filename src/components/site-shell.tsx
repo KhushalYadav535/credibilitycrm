@@ -83,6 +83,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formStatus, setFormStatus] = useState<string>("");
   const [hidden, setHidden] = useState(false);
+  const [isAtBottom, setIsAtBottom] = useState(false);
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -91,6 +92,11 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       setHidden(true);
     } else {
       setHidden(false);
+    }
+
+    if (typeof window !== "undefined") {
+      const isBottom = latest + window.innerHeight >= document.documentElement.scrollHeight - 100;
+      setIsAtBottom(isBottom);
     }
   });
 
@@ -134,65 +140,65 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <CustomCursor />
       <AnimatedBackground />
       <DemoContext.Provider value={value}>
-        <motion.header 
+        <motion.header
           variants={{ visible: { y: 0 }, hidden: { y: "-100%" } }}
           animate={hidden ? "hidden" : "visible"}
           transition={{ duration: 0.35, ease: "easeInOut" }}
           className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/85 backdrop-blur-xl"
         >
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-4">
-          <Link href="/" className="flex items-center gap-2 text-xl font-semibold tracking-tight text-white">
-            <Image src="/credibility-logo.svg" alt="Credibility logo" width={28} height={28} priority />
-            <span>Credibility</span>
-          </Link>
-          <nav className="hidden gap-6 text-sm text-slate-300 lg:flex items-center">
-            {navData.map((item) => {
-              if (item.options) {
-                return (
-                  <div key={item.label} className="group relative py-2">
-                    <button className="flex items-center gap-1 hover:text-white">
-                      {item.label}
-                      <svg className="w-3 h-3 opacity-60 transition duration-300 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
-                    <div className="absolute left-0 top-full hidden w-48 pt-2 group-hover:block">
-                      <div className="rounded-xl border border-white/10 bg-slate-900/90 p-2 shadow-xl backdrop-blur-xl">
-                        {item.options.map((opt) => (
-                          <Link
-                            key={opt.href}
-                            href={opt.href}
-                            className={`block rounded-lg px-3 py-2 transition-colors ${pathname === opt.href ? "bg-white/10 text-orange-400" : "text-slate-300 hover:bg-white/5 hover:text-white"}`}
-                          >
-                            {opt.label}
-                          </Link>
-                        ))}
+          <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-4">
+            <Link href="/" className="flex items-center gap-2 text-xl font-semibold tracking-tight text-white">
+              <Image src="/credibility-logo.svg" alt="Credibility logo" width={28} height={28} priority />
+              <span>Credibility</span>
+            </Link>
+            <nav className="hidden gap-6 text-sm text-slate-300 lg:flex items-center">
+              {navData.map((item) => {
+                if (item.options) {
+                  return (
+                    <div key={item.label} className="group relative py-2">
+                      <button className="flex items-center gap-1 hover:text-white">
+                        {item.label}
+                        <svg className="w-3 h-3 opacity-60 transition duration-300 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                      <div className="absolute left-0 top-full hidden w-48 pt-2 group-hover:block">
+                        <div className="rounded-xl border border-white/10 bg-slate-900/90 p-2 shadow-xl backdrop-blur-xl">
+                          {item.options.map((opt) => (
+                            <Link
+                              key={opt.href}
+                              href={opt.href}
+                              className={`block rounded-lg px-3 py-2 transition-colors ${pathname === opt.href ? "bg-white/10 text-orange-400" : "text-slate-300 hover:bg-white/5 hover:text-white"}`}
+                            >
+                              {opt.label}
+                            </Link>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  );
+                }
+                return (
+                  <Link
+                    key={item.href!}
+                    href={item.href!}
+                    className={pathname === item.href ? "text-orange-400" : "hover:text-white"}
+                  >
+                    {item.label}
+                  </Link>
                 );
-              }
-              return (
-                <Link
-                  key={item.href!}
-                  href={item.href!}
-                  className={pathname === item.href ? "text-orange-400" : "hover:text-white"}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
-          <button
-            onClick={() => {
-              setIsOpen(true);
-              trackEvent("cta_click", { location: "header" });
-            }}
-            className="btn-primary"
-          >
-            Book Demo
-          </button>
-        </div>
+              })}
+            </nav>
+            <button
+              onClick={() => {
+                setIsOpen(true);
+                trackEvent("cta_click", { location: "header" });
+              }}
+              className="btn-primary"
+            >
+              Book Demo
+            </button>
+          </div>
         </motion.header>
         <AnimatePresence mode="wait">
           <motion.main
@@ -256,7 +262,10 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             </div>
           </div>
         </footer>
-        <Link href="/contact" className="sticky-cta !bottom-24 md:!bottom-28">
+        <Link 
+          href="/contact" 
+          className={`sticky-cta ${isAtBottom ? "!bottom-24" : ""}`}
+        >
           Contact Sales
         </Link>
         {isOpen && (
